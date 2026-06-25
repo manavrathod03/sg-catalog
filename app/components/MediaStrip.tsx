@@ -9,6 +9,10 @@ interface Props {
   designName: string;
 }
 
+function isVideo(src: string) {
+  return src.match(/\.(mp4|webm|ogg|mov|m4v)$/i) || src.includes("video") || src.includes("vimeo") || src.includes("youtube");
+}
+
 export function MediaStrip({ media, designName }: Props) {
   const [active, setActive] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -64,14 +68,38 @@ export function MediaStrip({ media, designName }: Props) {
         }}
         className="relative aspect-square w-full rounded-2xl overflow-hidden bg-stone-100 cursor-zoom-in group active:scale-[0.99] transition-transform duration-200"
       >
-        <Image
-          src={media[active]}
-          alt={`${designName} view ${active + 1}`}
-          fill
-          sizes="(max-width: 672px) 100vw, 640px"
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-          priority
-        />
+        {isVideo(media[active]) ? (
+          <video
+            src={media[active]}
+            className="object-cover w-full h-full"
+            muted
+            playsInline
+          />
+        ) : (
+          <Image
+            src={media[active]}
+            alt={`${designName} view ${active + 1}`}
+            fill
+            sizes="(max-width: 672px) 100vw, 640px"
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            priority
+          />
+        )}
+        {/* Play icon overlay on main active view if video */}
+        {isVideo(media[active]) && (
+          <div className="absolute inset-0 bg-black/20 flex items-center justify-center pointer-events-none">
+            <div className="p-3 rounded-full bg-white/95 shadow-lg text-stone-800">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                className="w-5 h-5"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </div>
+        )}
         {/* Click to expand hover badge */}
         <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white text-[10px] font-medium px-2.5 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
           Click to expand
@@ -89,13 +117,35 @@ export function MediaStrip({ media, designName }: Props) {
                 i === active ? "border-stone-800" : "border-transparent"
               }`}
             >
-              <Image
-                src={src}
-                alt={`Thumbnail ${i + 1}`}
-                fill
-                sizes="64px"
-                className="object-cover"
-              />
+              {isVideo(src) ? (
+                <video
+                  src={src}
+                  className="object-cover w-full h-full"
+                  muted
+                  playsInline
+                />
+              ) : (
+                <Image
+                  src={src}
+                  alt={`Thumbnail ${i + 1}`}
+                  fill
+                  sizes="64px"
+                  className="object-cover"
+                />
+              )}
+              {/* Play icon overlay if video */}
+              {isVideo(src) && (
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    className="w-4 h-4 text-white"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              )}
             </button>
           ))}
         </div>
@@ -150,17 +200,27 @@ export function MediaStrip({ media, designName }: Props) {
               </button>
             )}
 
-            {/* Centered Image */}
+            {/* Centered Image / Video */}
             <div className="relative w-full h-full max-h-[80vh] rounded-xl overflow-hidden flex items-center justify-center">
-              <div className="relative w-full h-full">
-                <Image
-                  src={media[modalActive]}
-                  alt={`${designName} full view ${modalActive + 1}`}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 1024px) 100vw, 1024px"
-                  priority
-                />
+              <div className="relative w-full h-full flex items-center justify-center">
+                {isVideo(media[modalActive]) ? (
+                  <video
+                    src={media[modalActive]}
+                    className="w-full h-full max-h-[80vh] object-contain"
+                    controls
+                    autoPlay
+                    playsInline
+                  />
+                ) : (
+                  <Image
+                    src={media[modalActive]}
+                    alt={`${designName} full view ${modalActive + 1}`}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 1024px) 100vw, 1024px"
+                    priority
+                  />
+                )}
               </div>
             </div>
 
