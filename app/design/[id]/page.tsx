@@ -41,10 +41,10 @@ export default function DesignPage({ params }: Props) {
             </svg>
           </Link>
           <div>
-            <p className="text-[10px] font-semibold tracking-widest text-stone-400 uppercase leading-none">
+            <p className="text-sm font-semibold text-stone-800 leading-tight">
               D-{design.design_number}
             </p>
-            <p className="text-sm font-medium text-stone-800 leading-tight mt-0.5">
+            <p className="text-[10px] font-medium text-stone-400 mt-0.5 leading-none">
               {design.name}
             </p>
           </div>

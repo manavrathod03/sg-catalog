@@ -7,8 +7,6 @@ interface DesignCardProps {
 }
 
 export function DesignCard({ design }: DesignCardProps) {
-  const totalColors = design.colors.length;
-
   return (
     <Link
       href={`/design/${design.design_id}`}
@@ -31,28 +29,12 @@ export function DesignCard({ design }: DesignCardProps) {
 
       {/* Info */}
       <div className="p-3">
-        <p className="text-[11px] font-semibold tracking-wider text-stone-400 uppercase">
+        <p className="text-sm font-semibold text-stone-850 leading-tight truncate">
           D-{design.design_number}
         </p>
-        <p className="text-sm font-medium text-stone-800 mt-0.5 leading-tight truncate">
+        <p className="text-[11px] font-medium text-stone-400 mt-0.5 truncate">
           {design.name}
         </p>
-        {/* Color swatches */}
-        <div className="flex items-center gap-1.5 mt-2">
-          {design.colors.slice(0, 5).map((c) => (
-            <span
-              key={c.color_id}
-              className="w-3.5 h-3.5 rounded-full border border-stone-200 flex-shrink-0"
-              style={{ backgroundColor: c.code }}
-              title={c.name}
-            />
-          ))}
-          {totalColors > 5 && (
-            <span className="text-[10px] text-stone-400">
-              +{totalColors - 5}
-            </span>
-          )}
-        </div>
       </div>
     </Link>
   );
