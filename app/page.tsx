@@ -290,11 +290,11 @@ function DesignCardSkeleton() {
       <div className="p-3 space-y-2">
         <div className="h-3 bg-stone-200 rounded w-1/3 animate-pulse" />
         <div className="h-4 bg-stone-200 rounded w-3/4 animate-pulse" />
-        <div className="flex gap-1.5 mt-2">
+        {/* <div className="flex gap-1.5 mt-2">
           {[1, 2, 3].map((i) => (
             <div key={i} className="w-3.5 h-3.5 rounded-full bg-stone-100 border border-stone-200/50" />
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
