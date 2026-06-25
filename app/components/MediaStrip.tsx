@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 interface Props {
   media: string[];
@@ -12,6 +13,11 @@ export function MediaStrip({ media, designName }: Props) {
   const [active, setActive] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [modalActive, setModalActive] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Sync index back to page view when modal index changes
   useEffect(() => {
@@ -96,9 +102,9 @@ export function MediaStrip({ media, designName }: Props) {
       )}
 
       {/* Fullscreen Overlay Lightbox Carousel */}
-      {isOpen && (
+      {isOpen && mounted && createPortal(
         <div
-          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4 transition-opacity duration-300 animate-fade-in"
+          className="fixed inset-0 z-[9999] bg-black/90 flex flex-col items-center justify-center p-4 transition-opacity duration-300 animate-fade-in"
           onClick={() => setIsOpen(false)}
         >
           {/* Close Button */}
@@ -183,7 +189,8 @@ export function MediaStrip({ media, designName }: Props) {
           <div className="mt-4 text-xs font-semibold tracking-widest text-white/60 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm select-none">
             {modalActive + 1} / {media.length}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
