@@ -283,7 +283,7 @@ function TabContent({ items, isActive }: TabContentProps) {
 
 function DesignCardSkeleton() {
   return (
-    <div className="animate-pulse rounded-2xl overflow-hidden bg-white border border-stone-100 shadow-sm">
+    <div className="animate-pulse rounded-xl overflow-hidden bg-white border border-stone-100 shadow-sm">
       {/* Image Skeleton */}
       <div className="aspect-square bg-stone-200" />
       {/* Info Skeleton */}

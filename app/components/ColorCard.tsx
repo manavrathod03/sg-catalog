@@ -83,7 +83,7 @@ export function ColorCard({ color, productType }: Props) {
   const badge = color.badge ? BADGE_CONFIG[color.badge] : null;
 
   return (
-    <div className="rounded-2xl bg-white border border-stone-100 shadow-sm overflow-hidden">
+    <div className="rounded-xl bg-white border border-stone-100 shadow-sm overflow-hidden">
       {/* Image Swiper Container */}
       <div className="relative aspect-square bg-stone-100 group">
         {/* Main Active Image */}
@@ -279,7 +279,7 @@ export function ColorCard({ color, productType }: Props) {
             )}
 
             {/* Centered Image */}
-            <div className="relative w-full h-full max-h-[80vh] rounded-xl overflow-hidden flex items-center justify-center">
+            <div className="relative w-full h-full max-h-[80vh] rounded-lg overflow-hidden flex items-center justify-center">
               <div className="relative w-full h-full">
                 <Image
                   src={mediaList[lightboxActive]}

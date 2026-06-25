@@ -66,7 +66,7 @@ export function MediaStrip({ media, designName }: Props) {
           setModalActive(active);
           setIsOpen(true);
         }}
-        className="relative aspect-square w-full rounded-2xl overflow-hidden bg-stone-100 cursor-zoom-in group active:scale-[0.99] transition-transform duration-200"
+        className="relative aspect-square w-full rounded-xl overflow-hidden bg-stone-100 cursor-zoom-in group active:scale-[0.99] transition-transform duration-200"
       >
         {isVideo(media[active]) ? (
           <video
@@ -113,7 +113,7 @@ export function MediaStrip({ media, designName }: Props) {
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-colors ${
+              className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
                 i === active ? "border-stone-800" : "border-transparent"
               }`}
             >
@@ -201,7 +201,7 @@ export function MediaStrip({ media, designName }: Props) {
             )}
 
             {/* Centered Image / Video */}
-            <div className="relative w-full h-full max-h-[80vh] rounded-xl overflow-hidden flex items-center justify-center">
+            <div className="relative w-full h-full max-h-[80vh] rounded-lg overflow-hidden flex items-center justify-center">
               <div className="relative w-full h-full flex items-center justify-center">
                 {isVideo(media[modalActive]) ? (
                   <video

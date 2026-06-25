@@ -10,7 +10,7 @@ export function DesignCard({ design }: DesignCardProps) {
   return (
     <Link
       href={`/design/${design.design_id}`}
-      className="group block rounded-2xl overflow-hidden bg-white border border-stone-100 shadow-sm active:scale-[0.98] transition-transform duration-150"
+      className="group block rounded-xl overflow-hidden bg-white border border-stone-100 shadow-md active:scale-[0.98] transition-transform duration-150"
     >
       {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-stone-100">
