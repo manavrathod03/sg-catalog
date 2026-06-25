@@ -6,6 +6,7 @@ import { designs } from "./lib/data";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { DesignCard } from "./components/DesignCard";
+import { Phone, MessageCircle, Search, X } from "lucide-react";
 
 // Duplicate the list to simulate infinite scrolling
 const expandedShirts = Array.from({ length: 10 }).flatMap((_, i) =>
@@ -61,28 +62,38 @@ export default function HomePage() {
             Catalog
           </span>
 
-          {/* Search Trigger (Icon) */}
+          {/* Actions (Order, WhatsApp, Search) */}
           {!isSearchOpen && (
-            <button
-              onClick={() => setIsSearchOpen(true)}
-              className="p-2 text-stone-500 hover:text-stone-800 hover:bg-stone-100 rounded-full active:scale-95 transition-all duration-200"
-              aria-label="Search"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2.5}
-                stroke="currentColor"
-                className="w-4 h-4"
+            <div className="flex items-center gap-2">
+              {/* Order Now (Call) */}
+              <a
+                href="tel:+919833113880"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600 hover:bg-red-700 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider active:scale-95 transition-all duration-150 shadow-sm"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-            </button>
+                <Phone className="w-3.5 h-3.5 fill-current" />
+                Order
+              </a>
+
+              {/* WhatsApp Chat */}
+              <a
+                href="https://wa.me/919833113880"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-1.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white active:scale-95 transition-all duration-150 shadow-sm flex items-center justify-center"
+                aria-label="Order on WhatsApp"
+              >
+                <MessageCircle className="w-4 h-4" />
+              </a>
+
+              {/* Search Trigger */}
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className="p-1.5 border border-stone-300 text-stone-500 hover:text-stone-800 hover:bg-stone-100 rounded-full active:scale-95 transition-all duration-200"
+                aria-label="Search"
+              >
+                <Search className="w-4 h-4" />
+              </button>
+            </div>
           )}
 
           {/* Expanded Search Bar */}
@@ -100,20 +111,7 @@ export default function HomePage() {
             }`}
           >
             <div className="relative w-full flex items-center bg-stone-100 border border-stone-200 rounded-full px-3 h-full">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-4 h-4 text-stone-400 mr-2 flex-shrink-0"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
+              <Search className="w-4 h-4 text-stone-400 mr-2 flex-shrink-0" />
               <input
                 ref={searchInputRef}
                 type="text"
@@ -130,20 +128,7 @@ export default function HomePage() {
                 }}
                 className="p-1 text-stone-400 hover:text-stone-600 rounded-full hover:bg-stone-200/50 flex-shrink-0 transition-colors"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <X className="w-4 h-4" />
               </button>
             </div>
           </form>

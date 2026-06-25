@@ -5,6 +5,7 @@ import { designs } from "../../lib/data";
 import { ALL_SIZES, BADGE_CONFIG, getAvailableSizes } from "../../lib/utils";
 import { MediaStrip } from "../../components/MediaStrip";
 import { ColorCard } from "../../components/ColorCard";
+import { ChevronLeft, Phone, MessageCircle } from "lucide-react";
 
 interface Props {
   params: { id: string };
@@ -24,29 +25,46 @@ export default function DesignPage({ params }: Props) {
     <main className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="sticky top-0 z-20 bg-stone-50/90 backdrop-blur-sm border-b border-stone-200">
-        <div className="max-w-2xl mx-auto px-4 h-14 flex items-center gap-3">
-          <Link
-            href="/"
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors"
-            aria-label="Back to catalog"
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M10 3L5 8L10 13"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Link>
-          <div>
-            <p className="text-sm font-semibold text-stone-800 leading-tight">
-              D-{design.design_number}
-            </p>
-            <p className="text-[10px] font-medium text-stone-400 mt-0.5 leading-none">
-              {design.name}
-            </p>
+        <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-3 min-w-0">
+            <Link
+              href="/"
+              className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors flex-shrink-0"
+              aria-label="Back to catalog"
+            >
+              <ChevronLeft className="w-4 h-4 text-stone-600" />
+            </Link>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-stone-800 leading-tight truncate">
+                D-{design.design_number}
+              </p>
+              <p className="text-[10px] font-medium text-stone-400 mt-0.5 leading-none truncate">
+                {design.name}
+              </p>
+            </div>
+          </div>
+
+          {/* Action buttons (Order, WhatsApp) */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {/* Order Now (Call) */}
+            <a
+              href="tel:+919833113880"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-600 hover:bg-red-700 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider active:scale-95 transition-all duration-150 shadow-sm"
+            >
+              <Phone className="w-3.5 h-3.5 fill-current" />
+              Order
+            </a>
+
+            {/* WhatsApp Chat */}
+            <a
+              href="https://wa.me/919833113880"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-1.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white active:scale-95 transition-all duration-150 shadow-sm flex items-center justify-center"
+              aria-label="Order on WhatsApp"
+            >
+              <MessageCircle className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </header>

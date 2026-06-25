@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { designs } from "../lib/data";
 import { DesignCard } from "../components/DesignCard";
 import { Suspense } from "react";
+import { ArrowLeft, Search } from "lucide-react";
 
 function SearchResults() {
   const searchParams = useSearchParams();
@@ -28,20 +29,7 @@ function SearchResults() {
             className="p-2 -ml-2 text-stone-500 hover:text-stone-800 hover:bg-stone-100 rounded-full active:scale-95 transition-all flex items-center justify-center"
             aria-label="Back to home"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2.5}
-              stroke="currentColor"
-              className="w-4 h-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-              />
-            </svg>
+            <ArrowLeft className="w-4 h-4 text-stone-600" />
           </Link>
           <div className="flex-1 min-w-0">
             <h1 className="text-sm font-semibold text-stone-800 truncate">
@@ -64,20 +52,7 @@ function SearchResults() {
         ) : (
           <div className="flex flex-col items-center justify-center py-20 text-center px-4">
             <div className="w-12 h-12 bg-stone-100 border border-stone-200 rounded-full flex items-center justify-center text-stone-400 mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
+              <Search className="w-6 h-6 text-stone-400" />
             </div>
             <h2 className="text-sm font-medium text-stone-800">No results found</h2>
             <p className="text-xs text-stone-400 mt-1 max-w-[280px]">

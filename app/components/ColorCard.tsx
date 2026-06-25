@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { ColorItem, ProductType, SleeveType } from "../lib/data";
 import { ALL_SIZES, BADGE_CONFIG, getAvailableSizes } from "../lib/utils";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 interface Props {
   color: ColorItem;
@@ -113,16 +114,7 @@ export function ColorCard({ color, productType }: Props) {
             className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white/70 hover:bg-white text-stone-800 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow active:scale-90"
             aria-label="Previous slide"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2.5}
-              stroke="currentColor"
-              className="w-3.5 h-3.5"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
+            <ChevronLeft className="w-3.5 h-3.5" />
           </button>
         )}
 
@@ -136,16 +128,7 @@ export function ColorCard({ color, productType }: Props) {
             className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-white/70 hover:bg-white text-stone-800 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow active:scale-90"
             aria-label="Next slide"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2.5}
-              stroke="currentColor"
-              className="w-3.5 h-3.5"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
+            <ChevronRight className="w-3.5 h-3.5" />
           </button>
         )}
 
@@ -241,16 +224,7 @@ export function ColorCard({ color, productType }: Props) {
             className="absolute top-4 right-4 z-50 p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors duration-200"
             aria-label="Close fullscreen"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <X className="w-5 h-5" />
           </button>
 
           {/* Main Visual Carousel Area */}
@@ -265,16 +239,7 @@ export function ColorCard({ color, productType }: Props) {
                 className="absolute left-2 sm:left-4 z-40 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-200 active:scale-95 flex items-center justify-center shadow-lg backdrop-blur-sm"
                 aria-label="Previous image"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.5}
-                  stroke="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
+                <ChevronLeft className="w-5 h-5" />
               </button>
             )}
 
@@ -299,16 +264,7 @@ export function ColorCard({ color, productType }: Props) {
                 className="absolute right-2 sm:right-4 z-40 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-200 active:scale-95 flex items-center justify-center shadow-lg backdrop-blur-sm"
                 aria-label="Next image"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.5}
-                  stroke="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
+                <ChevronRight className="w-5 h-5" />
               </button>
             )}
           </div>
