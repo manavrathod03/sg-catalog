@@ -66,7 +66,7 @@ export function MediaStrip({ media, designName }: Props) {
           setModalActive(active);
           setIsOpen(true);
         }}
-        className="relative aspect-square w-full rounded-xl overflow-hidden bg-stone-100 cursor-zoom-in group active:scale-[0.99] transition-transform duration-200"
+        className="relative aspect-square w-full rounded-lg overflow-hidden bg-stone-100 cursor-zoom-in group active:scale-[0.99] transition-transform duration-200"
       >
         {isVideo(media[active]) ? (
           <video

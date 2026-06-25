@@ -83,7 +83,7 @@ export function ColorCard({ color, productType }: Props) {
   const badge = color.badge ? BADGE_CONFIG[color.badge] : null;
 
   return (
-    <div className="rounded-xl bg-white border border-stone-100 shadow-sm overflow-hidden">
+    <div className="rounded-lg bg-white border border-stone-100 shadow-card overflow-hidden">
       {/* Image Swiper Container */}
       <div className="relative aspect-square bg-stone-100 group">
         {/* Main Active Image */}
