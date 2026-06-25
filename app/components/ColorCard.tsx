@@ -19,9 +19,6 @@ export function ColorCard({ color, productType }: Props) {
   const [mounted, setMounted] = useState(false);
 
   const isShirt = productType === "SHIRT";
-  const sleeves = isShirt ? (["FULL", "HALF"] as SleeveType[]) : null;
-
-  const [sleeve, setSleeve] = useState<SleeveType>("FULL");
 
   // Compile media array
   const allMedia = [...color.videos, ...color.images];
@@ -66,20 +63,31 @@ export function ColorCard({ color, productType }: Props) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isLightboxOpen, mediaList.length]);
 
-  const stockForSleeve = isShirt
-    ? color.stock.filter((s) => s.sleeve === sleeve)
-    : color.stock;
-
-  const availableSizes = getAvailableSizes(stockForSleeve);
-
-  // Only show sizes relevant to product type
+  // Only show sizes relevant to product type (Shirt sizes extended to 48)
   const relevantSizes = productType === "PANT"
     ? ALL_SIZES.filter((s) => ["30","32","34","36","38","40","42","44"].includes(s))
-    : ALL_SIZES.filter((s) => ["36","38","40","42","44","46"].includes(s));
+    : ALL_SIZES.filter((s) => ["36","38","40","42","44","46","48"].includes(s));
 
-  // fallback: if no stock entries match, show relevant sizes from all stock
-  const allColorSizes = new Set(color.stock.map((s) => s.size));
-  const finalSizes = relevantSizes.filter((sz) => allColorSizes.has(sz) || availableSizes.has(sz));
+  // Compute stock sizes for Full and Half sleeves (shirts only)
+  const fullStock = color.stock.filter((s) => s.sleeve === "FULL");
+  const halfStock = color.stock.filter((s) => s.sleeve === "HALF");
+
+  const hasFullSleeve = isShirt && fullStock.length > 0;
+  const hasHalfSleeve = isShirt && halfStock.length > 0;
+
+  const fullAvailableSizes = getAvailableSizes(fullStock);
+  const halfAvailableSizes = getAvailableSizes(halfStock);
+
+  const fullAllSizes = new Set(fullStock.map((s) => s.size));
+  const halfAllSizes = new Set(halfStock.map((s) => s.size));
+
+  const fullSizes = relevantSizes.filter((sz) => fullAllSizes.has(sz) || fullAvailableSizes.has(sz));
+  const halfSizes = relevantSizes.filter((sz) => halfAllSizes.has(sz) || halfAvailableSizes.has(sz));
+
+  // For non-shirts (Pants)
+  const pantAvailableSizes = getAvailableSizes(color.stock);
+  const pantAllSizes = new Set(color.stock.map((s) => s.size));
+  const pantSizes = relevantSizes.filter((sz) => pantAllSizes.has(sz) || pantAvailableSizes.has(sz));
 
   const badge = color.badge ? BADGE_CONFIG[color.badge] : null;
 
@@ -164,52 +172,90 @@ export function ColorCard({ color, productType }: Props) {
       {/* Info */}
       <div className="p-2.5">
         {/* Color name + number */}
-        <div className="flex items-center gap-1.5 mb-2">
+        <div className="flex items-center gap-1.5 mb-2.5">
           <span className="text-[10px] font-semibold text-stone-500 bg-stone-100 px-1.5 py-0.5 rounded flex-shrink-0 select-none">
-            {color.color_number}
+            C-{color.color_number}
           </span>
           <p className="text-xs font-semibold text-stone-700 truncate">
             {color.name}
           </p>
         </div>
 
-        {/* Sleeve toggle (shirts only) */}
-        {isShirt && sleeves && (
-          <div className="flex rounded-lg overflow-hidden border border-stone-200 mb-2">
-            {sleeves.map((sl) => (
-              <button
-                key={sl}
-                onClick={() => setSleeve(sl)}
-                className={`flex-1 text-[9px] font-semibold py-1 transition-colors ${
-                  sleeve === sl
-                    ? "bg-stone-800 text-white"
-                    : "text-stone-500 hover:bg-stone-50"
-                }`}
-              >
-                {sl === "FULL" ? "Full" : "Half"}
-              </button>
-            ))}
+        {isShirt ? (
+          <div className="flex flex-col gap-2">
+            {hasFullSleeve && (
+              <div className="flex items-center gap-2">
+                <span className="text-[9px] font-bold text-stone-400 uppercase w-8 flex-shrink-0 select-none">
+                  Full
+                </span>
+                <div className="flex flex-wrap gap-1">
+                  {fullSizes.map((sz) => {
+                    const available = fullAvailableSizes.has(sz);
+                    return (
+                      <span
+                        key={sz}
+                        className={`text-[9px] font-medium w-5 h-5 flex items-center justify-center rounded-md border transition-colors ${
+                          available
+                            ? "border-stone-300 text-stone-700 bg-white"
+                            : "border-stone-100 text-stone-300 bg-stone-50 line-through"
+                        }`}
+                      >
+                        {sz}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            {hasHalfSleeve && (
+              <div className="flex items-center gap-2">
+                <span className="text-[9px] font-bold text-stone-400 uppercase w-8 flex-shrink-0 select-none">
+                  Half
+                </span>
+                <div className="flex flex-wrap gap-1">
+                  {halfSizes.map((sz) => {
+                    const available = halfAvailableSizes.has(sz);
+                    return (
+                      <span
+                        key={sz}
+                        className={`text-[9px] font-medium w-5 h-5 flex items-center justify-center rounded-md border transition-colors ${
+                          available
+                            ? "border-stone-300 text-stone-700 bg-white"
+                            : "border-stone-100 text-stone-300 bg-stone-50 line-through"
+                        }`}
+                      >
+                        {sz}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <span className="text-[9px] font-bold text-stone-400 uppercase w-8 flex-shrink-0 select-none">
+              Size
+            </span>
+            <div className="flex flex-wrap gap-1">
+              {pantSizes.map((sz) => {
+                const available = pantAvailableSizes.has(sz);
+                return (
+                  <span
+                    key={sz}
+                    className={`text-[9px] font-medium w-5 h-5 flex items-center justify-center rounded-md border transition-colors ${
+                      available
+                        ? "border-stone-300 text-stone-700 bg-white"
+                        : "border-stone-100 text-stone-300 bg-stone-50 line-through"
+                    }`}
+                  >
+                    {sz}
+                  </span>
+                );
+              })}
+            </div>
           </div>
         )}
-
-        {/* Sizes */}
-        <div className="flex flex-wrap gap-1">
-          {finalSizes.map((sz) => {
-            const available = availableSizes.has(sz);
-            return (
-              <span
-                key={sz}
-                className={`text-[9px] font-medium w-6 h-6 flex items-center justify-center rounded-md border ${
-                  available
-                    ? "border-stone-300 text-stone-700 bg-white"
-                    : "border-stone-100 text-stone-300 bg-stone-50 line-through"
-                }`}
-              >
-                {sz}
-              </span>
-            );
-          })}
-        </div>
       </div>
 
       {/* Fullscreen Overlay Lightbox Carousel */}
